@@ -10,6 +10,7 @@
 *.toc
 tests/*
 *.tgz
+*.zip
 course
 td-ordo/correction/*
 test-machine/*/correction
