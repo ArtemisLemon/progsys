@@ -9,6 +9,8 @@ func iter(ID int) {
 }
 
 func main() {
-	go iter(1)
-	iter(2)
+	for i:=0;i<100;i++ {
+		go iter(i)
+	}
+
 }
