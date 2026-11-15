@@ -22,7 +22,7 @@ func reader(c chan bool) {
 }
 
 func main() {
-	var c chan bool = make(chan bool)
+	var c chan bool = make(chan bool, 10) //2 write per read, until channel fills
 	go writer(c)
 	reader(c)
 }
