@@ -1,12 +1,16 @@
 package main
 
 import "sync"
+import "fmt"
 
 var wg sync.WaitGroup
+var mu sync.Mutex //RWMutex if you want to allow several reads at the same time
 
 func writeMap(m map[int]int, k int) {
 	defer wg.Done()
+	mu.Lock()
 	m[k] = k
+	mu.Unlock()
 }
 
 func main() {
@@ -19,5 +23,5 @@ func main() {
 	}
 
 	wg.Wait()
-
+	fmt.Println(m)
 }
