@@ -21,7 +21,8 @@ func switchxy() {
 func main() {
 	x = 5
 	y = 7
-	w.Add(4)
+	// w.Add(4) //waiting for 4 w.Done()
+	w.Add(3)
 	for i := 0; i < 3; i++ {
 		go switchxy()
 	}

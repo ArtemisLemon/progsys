@@ -25,6 +25,8 @@ func main() {
 	pongchan := make(chan bool, 1)
 	done := make(chan bool, 2)
 
+	pingchan<-true //give the ball to a player: both <-ready in ping and pong are waiting
+
 	go ping(pingchan, pongchan, done)
 	go pong(pongchan, pingchan, done)
 

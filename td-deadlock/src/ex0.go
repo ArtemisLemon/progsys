@@ -14,6 +14,7 @@ func switchxy() {
 	for i := 0; i < 1000; i++ {
 		x, y = y, x
 	}
+	m.Unlock() //didn't have unlock so famine for everyone
 	w.Done()
 }
 

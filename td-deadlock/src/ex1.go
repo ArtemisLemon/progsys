@@ -15,6 +15,7 @@ func switchxy() {
 		x, y = y, x
 	}
 	m.Unlock()
+	w.Done() //need to wake up main
 }
 
 func main() {
