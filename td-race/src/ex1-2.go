@@ -8,6 +8,8 @@ import (
 var w sync.WaitGroup
 
 // calcule n puissance m
+// not sequential!
+// no shared memory -> no race condition
 func puissance(n, m int) {
 	var res int = 1
 	for i := 0; i < m; i++ {

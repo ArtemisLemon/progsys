@@ -7,10 +7,13 @@ import (
 
 var x, y int
 var w sync.WaitGroup
+var m sync.Mutex
 
 func switchxy() {
 	for i := 0; i < 1000; i++ {
-		x, y = y, x
+		m.Lock()
+		x, y = y, x //race condition
+		m.Unlock()
 	}
 	w.Done()
 }

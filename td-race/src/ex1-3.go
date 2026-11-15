@@ -2,9 +2,10 @@ package main
 
 import "fmt"
 
-var res int
+var res int // Shared memory!
 
 // calcule n puissance m
+// Sequential -> no race condition
 func puissance(n, m int) {
 	res = 1
 	for i := 0; i < m; i++ {

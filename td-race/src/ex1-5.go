@@ -6,14 +6,17 @@ import (
 )
 
 var w sync.WaitGroup
+var mu sync.Mutex
 
 // calcule n puissance m
 func puissance(n, m int, res *int) {
+	mu.Lock()
 	*res = 1
 	for i := 0; i < m; i++ {
 		*res *= n
 	}
 	fmt.Println(n, "puissance", m, "vaut", *res)
+	mu.Unlock()
 	w.Done()
 	return
 }

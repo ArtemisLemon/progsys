@@ -5,16 +5,20 @@ import (
 	"sync"
 )
 
-var res int
+var res int //Shared memory
 var w sync.WaitGroup
+var mu sync.Mutex
 
 // calcule n puissance m
+// shared memory accessed concurrently -> race condition
 func puissance(n, m int) {
-	res = 1
+	mu.Lock()
+	res = 1 //race condition
 	for i := 0; i < m; i++ {
-		res *= n
+		res *= n //race condition
 	}
 	fmt.Println(n, "puissance", m, "vaut", res)
+	mu.Unlock()
 	w.Done()
 	return
 }

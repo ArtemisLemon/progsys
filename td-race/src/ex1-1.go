@@ -3,6 +3,7 @@ package main
 import "fmt"
 
 // calcule n puissance m
+// sequential -> no race condition
 func puissance(n, m int) (res int) {
 	res = 1
 	for i := 0; i < m; i++ {
