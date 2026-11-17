@@ -22,15 +22,22 @@ func main() {
 	go routine(c1)
 	go routine(c2)
 
-	select { //wait for a channel response
-	case w := <-c1: //the case where 2 gets a value from channel 1 first
-		fmt.Println("La première goroutine a été la plus rapide.")
-		fmt.Println("Elle a mis", w, "millisecondes.")
-	case w := <-c2: //the case where 2 gets a value from channel 2 first
-		fmt.Println("La deuxième goroutine a été la plus rapide.")
-		fmt.Println("Elle a mis", w, "millisecondes.")
-	case <-time.After(500 * time.Millisecond):
-		fmt.Println("timeout")
+	for {
+		select { //wait for a channel response
+			case w := <-c1: //the case where 2 gets a value from channel 1 first
+			fmt.Println("La première goroutine a été la plus rapide.")
+			fmt.Println("Elle a mis", w, "millisecondes.")
+			return
+			case w := <-c2: //the case where 2 gets a value from channel 2 first
+			fmt.Println("La deuxième goroutine a été la plus rapide.")
+			fmt.Println("Elle a mis", w, "millisecondes.")
+			return
+		case <-time.After(500 * time.Millisecond):
+			fmt.Println("timeout")
+			return
+		default:
+			fmt.Println("skip select") //useful to not block a loop
+		}
 	}
 
 }
