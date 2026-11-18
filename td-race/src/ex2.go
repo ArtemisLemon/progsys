@@ -2,40 +2,26 @@ package main
 
 import (
 	"log"
-	"sync"
 )
 
-// var com1, com2 []int
-var w sync.WaitGroup
 
 func prod(n int, com chan int) {
-	// defer w.Done()
+	defer close(com) //after this routine finishes com won't be written to
 	for i := 0; i < n; i++ {
-		// com1 = append(com1, i)
 		com <- i
 	}
 }
 
 func trans(com1 chan int, com2 chan int) {
-	// defer w.Done()
-	for {
-		// if len(com1) > 0 {
-		// 	com2 = append(com2, com1[0])
-		// 	com1 = com1[1:]
-		// }
-		tmp:=<-com1
+	defer close(com2) //after this routine finishes com2 won't be written to
+	for tmp := range com1{ //loop ends when com1 is closed
 		com2<-tmp
 	}
 }
 
 func cons(com chan int) {
-	// defer w.Done()
-	for {
-		// if len(com2) > 0 {
-		// 	log.Print(com2[0])
-		// 	com2 = com2[1:]
-		// }
-		log.Print(<-com)
+	for tmp := range com{
+		log.Print(tmp)
 	}
 }
 
@@ -43,9 +29,7 @@ func main() {
 	var com1 chan int = make(chan int,5)
 	var com2 chan int = make(chan int,5)
 
-	// w.Add(3)
 	go prod(1000, com1)
 	go trans(com1,com2)
-	go cons(com2)
-	// w.Wait()
+	cons(com2)
 }
